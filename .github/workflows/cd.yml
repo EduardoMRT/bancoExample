@@ -1,0 +1,36 @@
+name: CD
+on: 
+ workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build process
+        run: echo Initializing the build process
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment: Developer
+    needs: build
+    steps:
+      - name: developer process
+        run: echo Developer
+
+  deploy-homologation:
+    runs-on: ubuntu-latest
+    environment: Homologation
+    needs: deploy-dev
+    steps:
+      - name: homologation process
+        run: echo Homologation
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    environment: Production
+    needs: deploy-homologation
+    steps:
+      - name: production process
+        run: echo Production
+    
+      
